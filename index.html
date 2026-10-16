@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Молитвослов от Банана</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Ruslan+Display&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--bg:#f1e4c3;--bg2:#e6d4a8;--card:#fbf3dc;--ink:#2e1a14;--soft:#6b4e3d;--red:#8e1b1b;--gold:#b8892b;--head:#4a0f14;--headink:#f6e3b0;--line:#c9a24b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f0a0d;--bg2:#2b1014;--card:#34161a;--ink:#f3e2b8;--soft:#c9ab7c;--red:#e0705f;--gold:#d9b05a;--head:#3a0d12;--headink:#f6e3b0;--line:#a98337;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1f0a0d;--bg2:#2b1014;--card:#34161a;--ink:#f3e2b8;--soft:#c9ab7c;--red:#e0705f;--gold:#d9b05a;--head:#3a0d12;--headink:#f6e3b0;--line:#a98337;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'EB Garamond',Georgia,'Times New Roman',serif;font-size:19px;line-height:1.5}
+body{background:radial-gradient(circle at 50% -10%,var(--bg2),var(--bg) 60%);min-height:100vh;padding-bottom:84px}
+#snd{position:absolute;right:12px;top:12px;background:none;border:1px solid var(--gold);color:var(--headink);border-radius:6px;font-size:18px;padding:2px 8px}
+header{background:linear-gradient(var(--head),#5e1519);color:var(--headink);text-align:center;padding:20px 16px 18px;border-bottom:3px double var(--gold);position:relative}
+header .cross{width:34px;height:44px;margin:0 auto 4px;display:block}
+h1{font-family:'Ruslan Display','Cormorant SC',Georgia,serif;font-weight:400;font-size:30px;margin:0;letter-spacing:.04em;color:var(--headink)}
+.sub{font-family:'Cormorant SC',Georgia,serif;font-size:14px;letter-spacing:.14em;opacity:.85}
+.date{font-style:italic;font-size:15px;opacity:.9;margin-top:4px}
+main{max-width:640px;margin:0 auto;padding:16px}
+.orn{text-align:center;color:var(--gold);letter-spacing:.5em;margin:14px 0;font-size:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:inset 0 0 0 4px var(--card),inset 0 0 0 5px var(--line);padding:18px 20px;margin-bottom:14px}
+h2{font-family:'Cormorant SC',Georgia,serif;font-size:23px;color:var(--red);margin:0 0 6px;text-align:center;letter-spacing:.05em}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px}
+.chip{flex:none;border:1px solid var(--gold);background:transparent;color:var(--ink);font:inherit;font-size:16px;padding:5px 14px;border-radius:20px}
+.chip.on{background:var(--red);color:#fbf3dc;border-color:var(--red)}
+.item{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin-bottom:10px}
+.item .n{font-family:'Ruslan Display',serif;color:var(--red);font-size:26px;width:30px;text-align:center}
+.item b{font-weight:500;display:block}.item small{color:var(--soft);font-style:italic}
+.btn{display:block;width:100%;font-family:'Cormorant SC',Georgia,serif;font-weight:700;font-size:18px;letter-spacing:.08em;color:#fbf3dc;background:linear-gradient(#a52222,#7a1414);border:1px solid var(--gold);border-radius:6px;padding:12px;margin-top:10px}
+.btn.alt{background:transparent;color:var(--red);border-color:var(--red)}
+.row{display:flex;gap:10px}.row .btn{flex:1}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--head);border-top:3px double var(--gold);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav button{flex:1;background:none;border:0;color:var(--headink);opacity:.6;font-family:'Cormorant SC',Georgia,serif;font-size:14px;letter-spacing:.06em;padding:9px 0 8px}
+nav button.on{opacity:1;color:#f0c75e}nav svg{display:block;margin:0 auto 2px;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6}
+.reader{position:fixed;inset:0;background:var(--bg);z-index:10;overflow:auto;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);display:none}
+.reader.show{display:block}
+.rbar{position:sticky;top:0;background:var(--head);color:var(--headink);display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:3px double var(--gold)}
+.rbar button{background:none;border:1px solid var(--gold);color:var(--headink);font:inherit;border-radius:5px;padding:2px 12px}
+.txt p{margin:0 0 .8em;text-align:justify;hyphens:auto}
+.txt p:first-child::first-letter{font-family:'Ruslan Display',serif;color:var(--red);font-size:3.1em;float:left;line-height:.85;padding:4px 8px 0 0}
+.instr{font-style:italic;color:var(--soft);text-align:center;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.dots{display:flex;justify-content:center;gap:6px;margin:8px 0 14px;flex-wrap:wrap}.dots i{width:9px;height:9px;border-radius:50%;border:1px solid var(--gold)}.dots i.d{background:var(--gold)}.dots i.c{background:var(--red);border-color:var(--red)}
+.rem{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dotted var(--line)}
+.rem:last-child{border:0}.rem div{flex:1}.rem input[type=time]{font:inherit;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:2px 6px}
+.rem .x{background:none;border:0;color:var(--soft);font-size:22px}
+.sw{appearance:none;width:44px;height:25px;border-radius:14px;background:var(--bg2);border:1px solid var(--gold);position:relative}
+.sw::after{content:'';position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:var(--gold);transition:.2s}
+.sw:checked{background:var(--red)}.sw:checked::after{left:21px;background:#fbf3dc}
+.stat{display:flex;text-align:center}.stat div{flex:1}.stat b{font-family:'Ruslan Display',serif;font-size:30px;color:var(--red);display:block;font-weight:400}
+.candle{font-size:40px;text-align:center;filter:drop-shadow(0 0 10px #f0c75e)}
+.modal{position:fixed;inset:0;background:rgba(20,5,7,.78);z-index:20;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}
+.modal .card{max-width:420px;text-align:center}
+.note{font-size:15px;color:var(--soft);font-style:italic}
+nav button{font-size:12.5px!important;letter-spacing:.03em!important}
+.inp{width:100%;font:inherit;padding:8px;margin-top:10px;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:5px}
+.stand{position:relative;height:250px;border:1px solid var(--line);border-radius:6px;background:linear-gradient(#1b0709,#3a0d12);overflow:hidden;margin-bottom:10px}
+.glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 75%,rgba(255,190,80,.3),transparent 65%);opacity:.3}
+.stand.lit .glow{opacity:.6;animation:pulse 2.2s ease-in-out infinite}
+.cells{position:absolute;left:0;right:0;bottom:36px;height:196px;display:grid;grid-template-columns:repeat(8,1fr);align-content:end;padding:0 10px}
+.base{position:absolute;left:5%;right:5%;bottom:10px;height:26px;border-radius:3px;background:linear-gradient(#e0b95e,#6d4c14);box-shadow:0 4px 14px #000}
+.kanun .base{height:34px;border-radius:2px 2px 0 0}
+.kx{position:absolute;left:50%;top:-30px;transform:translateX(-50%);color:#f0c75e;font-size:26px}
+.cd{position:relative;height:84px;display:flex;justify-content:center;align-items:flex-end}
+.wx{display:block;width:9px;height:54px;border-radius:3px 3px 1px 1px;background:linear-gradient(90deg,#e4c372,#fff1c2 50%,#d3a74f);box-shadow:0 0 6px rgba(255,200,100,.35)}
+.fl{position:absolute;bottom:52px;width:10px;height:22px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;background:radial-gradient(#fff8d0 20%,#ffb33a 60%,#ff6a00);box-shadow:0 0 14px 5px rgba(255,170,40,.7);transform-origin:50% 100%;animation:flick .25s ease-in-out infinite alternate}
+.cd.new{animation:rise 10s ease-out both}
+.cd.new .fl{animation:ign 10s both}
+.bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#f0c75e)}
+@keyframes fill{to{width:100%}}
+@keyframes pulse{50%{opacity:.95}}
+@keyframes flick{from{transform:scale(1,.9) rotate(-2deg)}to{transform:scale(.94,1.08) rotate(2deg)}}
+@keyframes rise{0%{transform:translateY(240px);opacity:0}10%{opacity:1}35%{transform:translateY(-34px)}55%{transform:translateY(0)}100%{transform:none}}
+@keyframes ign{0%,52%{transform:scale(0)}60%{transform:scale(1.6,1.9)}70%{transform:scale(1.1) rotate(3deg)}85%{transform:scale(.95,1.1) rotate(-3deg)}100%{transform:scale(1)}}
+nav button{padding-left:0;padding-right:0}
+.scene{position:relative;height:160px;border-radius:6px;border:1px solid var(--line);overflow:hidden;background:repeating-linear-gradient(135deg,#2c2623 0 14px,#3a322d 14px 28px)}
+.scene .me{position:absolute;left:6%;bottom:8px;font-size:56px}
+.scene .dr{position:absolute;bottom:8px;font-size:56px;transition:right .6s}
+.bub{position:absolute;top:8px;left:8px;right:8px;text-align:center;background:#fbf3dc;color:#2e1a14;border-radius:8px;padding:3px 8px;font-size:15px;font-style:italic}
+.shake{animation:shk .35s}@keyframes shk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.sc{position:relative;border-radius:6px;border:1px solid var(--line);overflow:hidden;line-height:0;background:#222}.sc svg{width:100%;height:auto;display:block}
+.sc .bub{position:absolute;z-index:2;line-height:1.3}
+.sway{animation:sway 1.5s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.ring{transform-box:fill-box;transform-origin:center;animation:ringx .9s ease-out forwards}
+@keyframes ringx{from{transform:scale(.3);opacity:1}to{transform:scale(3.4);opacity:0}}
+.lamp{animation:lampf 3s infinite}@keyframes lampf{0%,100%{opacity:1}45%{opacity:.8}50%{opacity:.55}55%{opacity:.9}}
+</style>
+</head>
+<body>
+<header>
+<svg class="cross" viewBox="0 0 34 44"><g fill="none" stroke="#f0c75e" stroke-width="2.2" stroke-linecap="round"><path d="M17 2v40M8 11h18M11 20h12"/><path d="M10 36l14-7" stroke-width="2"/></g></svg>
+<h1>Молитвослов<br><span style="font-size:.6em;letter-spacing:.12em">от Банана</span></h1>
+<div class="sub">✠ Господи, помилуй ✠</div>
+<div class="date" id="date"></div><button id="snd" aria-label="Звук"></button>
+</header>
+<main id="main"></main>
+
+<div class="reader" id="reader">
+<div class="rbar"><button id="close">← Назад</button><span id="rtitle" style="font-family:'Cormorant SC',serif;letter-spacing:.06em"></span><span><button id="fm">А−</button> <button id="fp">А+</button></span></div>
+<div style="max-width:640px;margin:0 auto;padding:18px 18px 40px" id="rbody"></div>
+</div>
+
+<div class="modal" id="modal"><div class="card"><div class="candle">🕯️</div><h2 id="mt">Час молитвы</h2><p id="mm"></p><button class="btn" id="mgo">Приступить к молитве</button><button class="btn alt" id="mx">Позже</button></div></div>
+<nav id="nav"></nav>
+
+<script>
+const P=[
+{id:'tsar',t:'Царю Небесный',c:'main',n:'Призывание Святого Духа',x:'Царю Небесный, Утешителю, Душе истины, Иже везде сый и вся исполняяй, Сокровище благих и жизни Подателю, прииди и вселися в ны, и очисти ны от всякия скверны, и спаси, Блаже, души наша.'},
+{id:'tri',t:'Трисвятое',c:'main',n:'Читается с крестным знамением и поклонами',x:'Святый Боже, Святый Крепкий, Святый Безсмертный, помилуй нас. (Трижды)\nСлава Отцу и Сыну и Святому Духу, и ныне и присно и во веки веков. Аминь.\nПресвятая Троице, помилуй нас; Господи, очисти грехи наша; Владыко, прости беззакония наша; Святый, посети и исцели немощи наша, имене Твоего ради.\nГосподи, помилуй. (Трижды)\nСлава Отцу и Сыну и Святому Духу, и ныне и присно и во веки веков. Аминь.'},
+{id:'otche',t:'Отче наш',c:'main',n:'Молитва Господня',x:'Отче наш, Иже еси на небесех! Да святится имя Твое, да приидет Царствие Твое, да будет воля Твоя, яко на небеси и на земли.\nХлеб наш насущный даждь нам днесь; и остави нам долги наша, якоже и мы оставляем должником нашым; и не введи нас во искушение, но избави нас от лукаваго.'},
+{id:'bogo',t:'Богородице Дево, радуйся',c:'main',n:'Ангельское приветствие',x:'Богородице Дево, радуйся, Благодатная Марие, Господь с Тобою; благословена Ты в женах, и благословен плод чрева Твоего, яко Спаса родила еси душ наших.'},
+{id:'sim',t:'Символ веры',c:'main',n:'Исповедание веры',x:'Верую во единаго Бога Отца, Вседержителя, Творца небу и земли, видимым же всем и невидимым.\nИ во единаго Господа Иисуса Христа, Сына Божия, Единороднаго, Иже от Отца рожденнаго прежде всех век; Света от Света, Бога истинна от Бога истинна, рожденна, несотворенна, единосущна Отцу, Имже вся быша.\nНас ради человек и нашего ради спасения сшедшаго с небес, и воплотившагося от Духа Свята и Марии Девы, и вочеловечшася.\nРаспятаго же за ны при Понтийстем Пилате, и страдавша, и погребенна.\nИ воскресшаго в третий день по Писанием.\nИ возшедшаго на небеса, и седяща одесную Отца.\nИ паки грядущаго со славою судити живым и мертвым, Егоже Царствию не будет конца.\nИ в Духа Святаго, Господа, Животворящаго, Иже от Отца исходящаго, Иже со Отцем и Сыном спокланяема и сславима, глаголавшаго пророки.\nВо едину Святую, Соборную и Апостольскую Церковь.\nИсповедую едино крещение во оставление грехов.\nЧаю воскресения мертвых, и жизни будущаго века. Аминь.'},
+{id:'iis',t:'Иисусова молитва',c:'main',n:'Творится в любое время',x:'Господи Иисусе Христе, Сыне Божий, помилуй мя грешнаго.'},
+{id:'angel',t:'Молитва Ангелу Хранителю',c:'main',n:'Небесному покровителю',x:'Ангеле Христов, хранителю мой святый и покровителю души и тела моего, вся мне прегрешшая днесь, прости, и от всякаго лукаваго мя супостата избави, да ни в коем гресе прогневаю Бога моего; но помолися о мне грешнем и недостойнем рабе, яко достойна мя покажеши благости и милосердия Всесвятыя Троицы и Матере Господа моего Иисуса Христа и всех святых. Аминь.'},
+{id:'opt',t:'Молитва оптинских старцев',c:'morn',n:'На начало дня',x:'Господи, дай мне с душевным спокойствием встретить всё, что принесёт мне наступающий день. Дай мне всецело предаться воле Твоей святой. На всякий час сего дня во всём наставь и поддержи меня.\nКакие бы я ни получал известия в течение дня, научи меня принять их со спокойной душой и твёрдым убеждением, что на всё святая воля Твоя. Во всех словах и делах моих руководи моими мыслями и чувствами.\nВо всех непредвиденных случаях не дай мне забыть, что всё ниспослано Тобою. Научи меня прямо и разумно действовать с каждым членом семьи моей, никого не смущая и не огорчая.\nГосподи, дай мне силу перенести утомление наступающего дня и все события в течение его. Руководи моею волей и научи меня молиться, верить, надеяться, терпеть, прощать и любить. Аминь.'},
+{id:'eve',t:'Молитва на сон грядущий',c:'eve',n:'Вечернее прошение о прощении',x:'Господи Боже наш, елика согреших во дне сем словом, делом и помышлением, яко Благ и Человеколюбец прости ми. Мирен сон и безмятежен даруй ми. Ангела Твоего хранителя пошли, покрывающа и соблюдающа мя от всякаго зла: яко Ты еси хранитель душ и телес наших, и Тебе славу возсылаем, Отцу и Сыну и Святому Духу, ныне и присно и во веки веков. Аминь.'},
+{id:'dost',t:'Достойно есть',c:'eve',n:'Величание Богородицы',x:'Достойно есть яко воистину блажити Тя, Богородицу, Присноблаженную и Пренепорочную и Матерь Бога нашего. Честнейшую херувим и славнейшую без сравнения серафим, без истления Бога Слова рождшую, сущую Богородицу Тя величаем.'},
+{id:'pre',t:'Молитва перед трапезой',c:'meal',n:'Перед принятием пищи',x:'Очи всех на Тя, Господи, уповают, и Ты даеши им пищу во благовремении, отверзаеши Ты щедрую руку Твою и исполняеши всякое животно благоволения.\nГосподи Иисусе Христе, Боже наш, благослови нам пищу и питие молитвами Пречистыя Твоея Матере и всех святых Твоих, яко благословен еси во веки веков. Аминь.'},
+{id:'posle',t:'Благодарение после трапезы',c:'meal',n:'После принятия пищи',x:'Благодарим Тя, Христе Боже наш, яко насытил еси нас земных Твоих благ; не лиши нас и Небеснаго Твоего Царствия, но яко посреде учеников Твоих пришел еси, Спасе, мир даяй им, прииди к нам и спаси нас. Аминь.'},
+{id:'ps50',t:'Псалом 50',c:'ps',n:'Покаянный псалом Давида',x:'Помилуй мя, Боже, по велицей милости Твоей, и по множеству щедрот Твоих очисти беззаконие мое.\nНаипаче омый мя от беззакония моего, и от греха моего очисти мя.\nЯко беззаконие мое аз знаю, и грех мой предо мною есть выну.\nТебе единому согреших и лукавое пред Тобою сотворих, яко да оправдишися во словесех Твоих и победиши внегда судити Ти.\nСе бо в беззакониих зачат есмь, и во гресех роди мя мати моя.\nСе бо истину возлюбил еси, безвестная и тайная премудрости Твоея явил ми еси.\nОкропиши мя иссопом, и очищуся, омыеши мя, и паче снега убелюся.\nСлуху моему даси радость и веселие, возрадуются кости смиренныя.\nОтврати лице Твое от грех моих, и вся беззакония моя очисти.\nСердце чисто созижди во мне, Боже, и дух прав обнови во утробе моей.\nНе отвержи мене от лица Твоего, и Духа Твоего Святаго не отъими от мене.\nВоздаждь ми радость спасения Твоего, и Духом Владычним утверди мя.\nНаучу беззаконныя путем Твоим, и нечестивии к Тебе обратятся.\nИзбави мя от кровей, Боже, Боже спасения моего, возрадуется язык мой правде Твоей.\nГосподи, устне мои отверзеши, и уста моя возвестят хвалу Твою.\nЯко аще бы восхотел еси жертвы, дал бых убо: всесожжения не благоволиши.\nЖертва Богу дух сокрушен: сердце сокрушенно и смиренно Бог не уничижит.\nУблажи, Господи, благоволением Твоим Сиона, и да созиждутся стены Иерусалимския.\nТогда благоволиши жертву правды, возношение и всесожжения: тогда возложат на олтарь Твой тельцы.'},
+{id:'ps22',t:'Псалом 22',c:'ps',n:'«Господь пасет мя»',x:'Господь пасет мя, и ничтоже мя лишит: на месте злачне, ту всели мя, на воде покойне воспита мя.\nДушу мою обрати, настави мя на стези правды, имене ради Своего.\nАще бо и пойду посреде сени смертныя, не убоюся зла, яко Ты со мною еси: жезл Твой и палица Твоя, та мя утешиста.\nУготовал еси предо мною трапезу сопротив стужающим ми: умастил еси елеом главу мою, и чаша Твоя упоявающи мя, яко державна.\nИ милость Твоя поженет мя вся дни живота моего, и еже вселитися ми в дому Господни в долготу дний.'},
+{id:'krest',t:'Тропарь Кресту',c:'main',n:'«Спаси, Господи, люди Твоя»',x:'Спаси, Господи, люди Твоя и благослови достояние Твое, победы на сопротивныя даруя и Твое сохраняя Крестом Твоим жительство.'},
+{id:'delo',t:'Молитва перед началом дела',c:'main',n:'Благословение на всякий труд',x:'Господи Иисусе Христе, Боже наш, Сам рекл еси: без Мене не можете творити ничесоже. Господи мой, верою объемля сия слова Твоя, припадаю к благости Твоей: помози ми, грешному, сие дело, начинаемое мною, о Тебе Самом начати, и о Тебе совершити, во имя Отца и Сына и Святаго Духа. Аминь.'},
+{id:'vzbr',t:'Взбранной Воеводе',c:'sv',n:'Кондак Пресвятой Богородице',x:'Взбранней Воеводе победительная, яко избавльшеся от злых, благодарственная восписуем Ти раби Твои, Богородице: но яко имущая державу непобедимую, от всяких нас бед свободи, да зовем Ти: радуйся, Невесто Неневестная.'},
+{id:'zast',t:'Заступнице усердная',c:'sv',n:'Молитва Пресвятой Богородице',x:'Заступнице усердная, Мати Господа Вышняго, за всех молиши Сына Твоего, Христа Бога нашего, и всем твориши спастися, в державный Твой покров прибегающим.\nВсех нас заступи, о Госпоже Царице и Владычице, иже в напастех и скорбех, и в болезнех, обремененных грехми многими, стоящих и молящихся Тебе от умиленныя души и сердца, пред пречистым Твоим образом со слезами, и невозвратно надежду имущих на Тя, избавления всех зол, всем полезная даруй и вся спаси, Богородице Дево: Ты бо еси Божественный покров рабом Твоим.'},
+{id:'nik',t:'Тропарь святителю Николаю',c:'sv',n:'Чудотворцу Мирликийскому',x:'Правило веры и образ кротости, воздержания учитель яви тя стаду твоему, яже вещей истина: сего ради стяжал еси смирением высокая, нищетою богатая. Отче священноначальниче Николае, моли Христа Бога спастися душам нашим.'},
+{id:'zhiv',t:'О здравии близких',c:'lif',n:'Молитва о живых',x:'Спаси, Господи, и помилуй отца моего духовнаго, родителей моих, родных и ближних моих, друзей и благодетелей моих, и вся православныя христианы.\nПодаждь им мирное и безмятежное житие, здравие душевное и телесное, и всякое благо, и Дух Твой Святый наставь их на всякое доброе дело. Аминь.'},
+{id:'usop',t:'Об упокоении усопших',c:'lif',n:'Молитва об усопших',x:'Помяни, Господи Боже наш, в вере и надежди живота вечнаго преставльшихся рабов Твоих, и яко Благ и Человеколюбец, отпущаяй грехи и потребляяй неправды, ослаби, остави и прости вся вольная их согрешения и невольная, избави их вечныя муки и огня геенскаго, и даруй им причастие и наслаждение вечных Твоих благ, уготованных любящим Тя.\nАще бо и согрешиша, но не отступиша от Тебе, и несумненно во Отца, и Сына, и Святаго Духа, Бога Тя в Троице славимаго, веровали. Темже милостив им буди, и веру, яже в Тя вместо дел вмени, и со святыми Твоими, яко Щедр, упокой: несть бо человека, иже поживет и не согрешит. Но Ты един еси кроме всякаго греха, и правда Твоя, правда во веки, и Ты еси един Бог милостей и щедрот и человеколюбия, и Тебе славу возсылаем, Отцу и Сыну и Святому Духу, ныне и присно и во веки веков. Аминь.'}
+];
+const byId=Object.fromEntries(P.map(p=>[p.id,p]));
+const START={t:'Начало молитвы',i:'Стоя перед святыми образами, перекрестись и скажи:',x:'Во имя Отца, и Сына, и Святаго Духа. Аминь.\nСлава Тебе, Боже наш, слава Тебе.'};
+const END={t:'Отпуст',i:'Скажи двенадцать раз «Господи, помилуй», затем перекрестись и поклонись:',x:'Господи, помилуй. (12 раз)\nБлагослови, Господи. Слава Тебе, Боже наш, слава Тебе.\nМолитвами святых отец наших, Господи Иисусе Христе, Боже наш, помилуй нас. Аминь.'};
+const RULES={
+morn:{name:'Утреннее правило',ico:'☀',steps:[START,{p:'tsar',i:'Сотвори крестное знамение и призови Духа Святаго:'},{p:'tri',i:'Прочти с благоговением, творя три поясных поклона:'},{p:'otche',i:'Прочти, не торопясь, вслушиваясь в каждое слово:'},{p:'bogo',i:'Прочти трижды, обратившись к Пречистой Деве:'},{p:'sim',i:'Исповедуй веру Церкви, стоя с непокрытой головой:'},{p:'opt',i:'Предай грядущий день воле Божией:'},{p:'angel',i:'Обратись к Ангелу, данному тебе от Крещения:'},END]},
+eve:{name:'Вечернее правило',ico:'☾',steps:[START,{p:'tsar',i:'Сотвори крестное знамение и призови Духа Святаго:'},{p:'tri',i:'Прочти с благоговением, творя три поясных поклона:'},{p:'otche',i:'Прочти, не торопясь:'},{p:'iis',i:'Повтори несколько раз, собрав ум в сердце:'},{p:'eve',i:'Вспомни прожитый день и покайся в согрешениях:'},{p:'angel',i:'Обратись к Ангелу Хранителю:'},{p:'bogo',i:'Прочти трижды:'},{p:'dost',i:'Воспой хвалу Матери Света:'},END]}};
+const CATS=[['all','Все'],['main','Основные'],['ps','Псалмы'],['sv','Богородице и святым'],['lif','О близких'],['morn','Утро'],['eve','Вечер'],['meal','Трапеза']];
+const $=s=>document.querySelector(s);
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const today=()=>new Date().toISOString().slice(0,10);
+let S=ls.get('mol',{log:{},cand:0,fs:19,rem:[{id:1,l:'Утреннее правило',t:'07:00',on:true,r:'morn'},{id:2,l:'Молитва перед обедом',t:'13:00',on:true,r:'pre'},{id:3,l:'Вечернее правило',t:'21:30',on:true,r:'eve'}],fired:{}});
+const save=()=>ls.set('mol',S);S.candles=S.candles||[];S.notes=S.notes||[];
+let tab='home',cat='all',pending=null;
+const tg=window.Telegram&&Telegram.WebApp;if(tg){try{tg.ready();tg.expand();tg.setHeaderColor('#4a0f14');tg.setBackgroundColor('#4a0f14');}catch(e){}}
+$('#date').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+const paras=x=>x.split('\n').map(l=>'<p>'+l.replace(/</g,'&lt;')+'</p>').join('');
+function streak(){let n=0,d=new Date();while(S.log[d.toISOString().slice(0,10)]){n++;d.setDate(d.getDate()-1)}return n}
+function mark(){S.log[today()]=(S.log[today()]||0)+1;save()}
+const IC={game:'<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10v5M5.5 12.5h5M16 11.5h.01M18 13.5h.01"/></svg>',temple:'<svg viewBox="0 0 24 24"><path d="M9 11h6v10H9zM12 2c2.4 2.2 2.4 4.6 0 7-2.4-2.4-2.4-4.8 0-7z"/></svg>',home:'<svg viewBox="0 0 24 24"><path d="M12 3v18M6 8h12M8.5 13h7"/></svg>',book:'<svg viewBox="0 0 24 24"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1z M12 6v14"/></svg>',bell:'<svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4"/></svg>'};
+function nav(){$('#nav').innerHTML=[['home','Главная','home'],['book','Молитвы','book'],['temple','Храм','temple'],['games','Игры','game'],['bell','Часы','bell']].map(([k,l,i])=>`<button class="${tab===k?'on':''}" data-t="${k}">${IC[i]}${l}</button>`).join('');
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;render()})}
+function render(){stopSong();nav();({home,book,temple,games,bell})[tab]();window.scrollTo(0,0)}
+function home(){const h=new Date().getHours();const g=h<5?'Благословенной ночи':h<12?'Доброе утро. Благослови, Господи':h<18?'Благословенного дня':'Мирного вечера';
+$('#main').innerHTML=`<div class="card"><h2>${g}</h2><div class="orn">✠ ✠ ✠</div>
+<div class="candle" id="cd">🕯️</div><div class="stat"><div><b>${S.cand}</b><span class="note">свечей зажжено</span></div><div><b>${streak()}</b><span class="note">дней подряд</span></div><div><b>${S.log[today()]||0}</b><span class="note">молитв сегодня</span></div></div>
+<button class="btn alt" id="lit">🕯 Поставить свечу в храме</button></div>
+<div class="card"><h2>Молитвенное правило</h2><p class="note" style="text-align:center">Пошаговое чтение с наставлениями</p>
+<button class="btn" data-r="morn">☀ Утреннее правило</button><button class="btn" data-r="eve">☾ Вечернее правило</button></div>
+<div class="card"><h2>Слово дня</h2><p style="text-align:center;font-style:italic">«Непрестанно молитесь, за все благодарите: ибо такова о вас воля Божия во Христе Иисусе.»</p><p class="note" style="text-align:center">1 Фессалоникийцам 5:17–18</p></div>`;
+$('#lit').onclick=()=>{tab='temple';tm='h';render()};
+document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rule(b.dataset.r))}
+function book(){$('#main').innerHTML=`<div class="chips">${CATS.map(([k,l])=>`<button class="chip ${cat===k?'on':''}" data-c="${k}">${l}</button>`).join('')}</div>`+
+P.filter(p=>cat==='all'||p.c===cat).map((p,i)=>`<button class="item" data-p="${p.id}"><span class="n">${p.t[0]}</span><span><b>${p.t}</b><small>${p.n}</small></span></button>`).join('');
+document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{cat=b.dataset.c;book()});
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>prayer(b.dataset.p))}
+function open(title,html){$('#rtitle').textContent=title;$('#rbody').innerHTML=html;$('#reader').classList.add('show');$('#reader').scrollTop=0;$('#rbody').style.fontSize=S.fs+'px'}
+$('#close').onclick=()=>{$('#reader').classList.remove('show');if(tab==='home')home()};
+$('#fm').onclick=()=>{S.fs=Math.max(15,S.fs-2);save();$('#rbody').style.fontSize=S.fs+'px'};
+$('#fp').onclick=()=>{S.fs=Math.min(32,S.fs+2);save();$('#rbody').style.fontSize=S.fs+'px'};
+function prayer(id){const p=byId[id];open(p.t,`<h2>${p.t}</h2><div class="instr">${p.n}</div><div class="txt">${paras(p.x)}</div><div class="orn">✠</div><button class="btn" id="amen">Аминь · Помолился</button>`);
+$('#amen').onclick=()=>{mark();$('#amen').textContent='Господи, помилуй и спаси';$('#amen').disabled=true}}
+function rule(k){const R=RULES[k],n=R.steps.length;let i=0;
+const draw=()=>{const s=R.steps[i],p=s.p?byId[s.p]:s,title=s.p?p.t:s.t,txt=p.x;
+open(R.name,`<div class="dots">${R.steps.map((_,j)=>`<i class="${j<i?'c':j===i?'d':''}"></i>`).join('')}</div><h2>${title}</h2><div class="instr">${s.i}</div><div class="txt">${paras(txt)}</div><div class="orn">✠</div><div class="row">${i?'<button class="btn alt" id="pv">Назад</button>':''}<button class="btn" id="nx">${i===n-1?'Аминь':'Далее'}</button></div><p class="note" style="text-align:center">Шаг ${i+1} из ${n}</p>`);
+if(i)$('#pv').onclick=()=>{i--;draw()};
+$('#nx').onclick=()=>{if(i<n-1){i++;draw()}else{mark();S.cand++;save();open(R.name,`<div class="candle">🕯️</div><h2>Слава Богу за все</h2><div class="instr">Правило совершено. Храни тебя Господь!</div><div class="txt"><p>Да хранит тебя Господь Своею благодатию, молитвами Пречистой Своей Матери и всех святых. Аминь.</p></div><button class="btn" id="fin">Закрыть</button>`);$('#fin').onclick=()=>$('#close').click()}};
+};draw()}
+const SND=(()=>{let c;const ctx=()=>{if(!c){try{c=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return null}}if(c.state==='suspended')c.resume();return c};
+const ok=()=>S.snd!==false;
+function noise(d,hp,lp,v,dl=0){const a=ctx();if(!a||!ok())return;const n=Math.floor(a.sampleRate*d),b=a.createBuffer(1,n,a.sampleRate),o=b.getChannelData(0);for(let i=0;i<n;i++)o[i]=(Math.random()*2-1)*Math.pow(1-i/n,2);
+const s=a.createBufferSource();s.buffer=b;const h=a.createBiquadFilter();h.type='highpass';h.frequency.value=hp||20;const l=a.createBiquadFilter();l.type='lowpass';l.frequency.value=lp;const g=a.createGain();g.gain.value=v;s.connect(h);h.connect(l);l.connect(g);g.connect(a.destination);s.start(a.currentTime+dl)}
+function tone(fr,d,ty,v,dl=0,sl){const a=ctx();if(!a||!ok())return;const o=a.createOscillator(),g=a.createGain(),t=a.currentTime+dl;o.type=ty||'sine';o.frequency.setValueAtTime(fr,t);if(sl)o.frequency.exponentialRampToValueAtTime(sl,t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.05)}
+const S2={prep(){ctx()},shot(){noise(.55,0,2000,.9);tone(130,.4,'sine',.8,0,38)},click(){noise(.05,2000,9000,.4);tone(900,.05,'square',.06)},
+reload(){S2.click();setTimeout(S2.click,200)},glass(){noise(.3,3000,12000,.5);[0,.05,.1,.17].forEach((d,i)=>tone(2200+i*650+Math.random()*400,.2,'triangle',.1,d))},
+ding(){tone(880,.4,'sine',.15);tone(1320,.5,'sine',.1,.06)},good(){tone(660,.3,'sine',.18);tone(990,.45,'sine',.14,.09)},bad(){tone(160,.4,'sawtooth',.18,0,70);noise(.25,0,600,.4)},
+step(){tone(95,.14,'sine',.35,0,50)},bell(f){f=f||523;[1,2.76,5.4].forEach((m,i)=>tone(f*m,2.4/(i+1),'sine',.2/(i+1)))},match(){noise(.4,1500,8000,.35)},whoosh(){noise(.7,200,2500,.25)},
+pad(){[220,277,330,440].forEach(f=>tone(f,10,'sine',.05))},win(){[523,659,784,1047].forEach((f,i)=>tone(f,.9,'triangle',.18,i*.17))},lose(){[392,330,262,196].forEach((f,i)=>tone(f,.55,'sawtooth',.11,i*.25))}};return S2})();
+let song;
+function songMsg(t){const e=document.getElementById('sn');if(e)e.textContent=t}
+function playSong(){if(S.snd===false)return;try{if(!song){song=new Audio('polnyj-bak.mp3');song.onerror=()=>songMsg('Файл polnyj-bak.mp3 не найден — положите его рядом с index.html')}song.currentTime=0;const r=song.play();if(r&&r.catch)r.catch(()=>songMsg('Не удалось включить песню'))}catch(e){}}
+function stopSong(){try{if(song)song.pause()}catch(e){}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let tm='h',busy=false;
+const NT={h:'Молебен о здравии',b:'Молебен о болящих',t:'Благодарственный молебен',r:'Панихида об упокоении'};
+const NTX={h:n=>`Господи Боже наш, помяни и помилуй, по велицей милости Твоей, ради молитв Пречистыя Твоея Матере и всех святых, тех, чьи имена записаны: ${n}.\nДаруй им здравие душевное и телесное, мир и всякое благо, и спаси их. Аминь.`,
+b:n=>`Господи Иисусе Христе, Врачу душ и телес, посети и исцели болящих, чьи имена записаны: ${n}.\nДаруй им терпение, исцеление и утешение. Аминь.`,
+t:n=>`Слава Тебе, Боже наш, слава Тебе! Благодарим Тя за всякую милость и благодеяние Твое, явленные нам и тем, чьи имена записаны: ${n}.\nБлагодать Твоя да пребывает с нами во веки веков. Аминь.`,
+r:n=>`Помяни, Господи, в вере и надежде живота вечнаго преставльшихся: ${n}.\nПрости им вся согрешения вольная и невольная и даруй им Царствие Небесное.\nВечная им память.`};
+const cdl=(c,nw)=>`<div class="cd${nw?' new':''}" title="${esc(c.n||'')}"><span class="fl"></span><span class="wx"></span></div>`;
+function temple(){const live=S.candles.filter(c=>c.k===tm&&Date.now()-c.ts<864e5).slice(-23);const h=tm==='h';
+const chips=[['h','За здравие'],['r','За упокой'],['n','Записки']].map(([k,l])=>`<button class="chip ${tm===k?'on':''}" data-m="${k}">${l}</button>`).join('');
+$('#main').innerHTML=`<div class="chips">${chips}</div>`+(tm==='n'?notesView():
+`<div class="card"><h2>${h?'Свеча за здравие':'Свеча за упокой'}</h2>
+<div class="stand ${h?'':'kanun'} ${live.length?'lit':''}" id="stand"><div class="glow"></div><div class="cells" id="cells">${live.map(c=>cdl(c)).join('')}</div><div class="base">${h?'':'<span class="kx">✠</span>'}</div></div>
+<div class="bar"><i id="pb"></i></div>
+<p class="note" id="cap" style="text-align:center;min-height:3em">${h?'Поставьте свечу и помолитесь о близких.':'Поставьте свечу и помолитесь об усопших.'}</p>
+<input class="inp" id="cn" maxlength="40" placeholder="${h?'Имя (по желанию), например: Иоанн':'Имя усопшего (по желанию)'}">
+<button class="btn" id="go">🕯 Поставить свечу</button></div>`);
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{tm=b.dataset.m;temple()});
+if(tm!=='n')$('#go').onclick=place;else notesBind()}
+function place(){if(busy)return;busy=true;SND.prep();SND.click();SND.pad();setTimeout(SND.match,4000);setTimeout(SND.whoosh,5000);const k=tm,n=$('#cn').value.trim().slice(0,40),c={k,n,ts:Date.now()};
+$('#go').disabled=true;$('#stand').classList.add('lit');$('#cells').insertAdjacentHTML('beforeend',cdl(c,true));
+$('#pb').style.animation='fill 10s linear forwards';
+const L=k==='h'?['Приобретаем свечу у свечного ящика…','Приступаем к подсвечнику, творим крестное знамение…','Возжигаем свечу от лампады…','Ставим свечу пред святым образом…',n?`«Спаси, Господи, и помилуй раба Божия ${n}»`:'«Спаси, Господи, и помилуй рабов Твоих и вся православныя христианы»']
+:['Приобретаем свечу у свечного ящика…','Приступаем к кануну, творим крестное знамение…','Возжигаем свечу от лампады…','Ставим свечу пред Распятием…',n?`«Упокой, Господи, душу усопшего раба Твоего ${n}, и прости ему вся согрешения вольная и невольная»`:'«Упокой, Господи, души усопших раб Твоих, и прости им вся согрешения вольная и невольная»'];
+let i=0;const say=()=>{const e=$('#cap');if(e&&tab==='temple')e.textContent=L[i]};say();
+const iv=setInterval(()=>{i++;if(i<L.length)say()},2000);
+setTimeout(()=>{clearInterval(iv);SND.bell(587);S.candles.push(c);S.cand++;mark();busy=false;if(tab==='temple'&&tm===k){temple();$('#cap').textContent='Свеча поставлена. Господи, помилуй!'}},10000)}
+function notesView(){const ls=S.notes.slice().reverse();
+return `<div class="card"><h2>Подать записку</h2><p class="note" style="text-align:center">Имена пишутся в родительном падеже: «Иоанна, Марии, Николая»</p>
+<select class="inp" id="nk">${Object.entries(NT).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select>
+<textarea class="inp" id="nn" rows="3" placeholder="Имена через запятую"></textarea><button class="btn" id="ns">Записать</button></div>
+<div class="card"><h2>Мои записки</h2>${ls.length?ls.map(n=>`<div class="rem"><div><b>${NT[n.k]}</b><br><small class="note">${esc(n.n)}</small></div><button class="btn alt" style="width:auto;margin:0;padding:6px 12px;font-size:15px" data-rd="${n.id}">Читать</button><button class="x" data-dn="${n.id}">×</button></div>`).join(''):'<p class="note" style="text-align:center">Пока нет записок</p>'}</div>`}
+function notesBind(){$('#ns').onclick=()=>{const n=$('#nn').value.trim();if(!n)return;S.notes.push({id:Date.now(),k:$('#nk').value,n:n.slice(0,400)});save();temple()};
+document.querySelectorAll('[data-dn]').forEach(b=>b.onclick=()=>{S.notes=S.notes.filter(x=>x.id!=b.dataset.dn);save();temple()});
+document.querySelectorAll('[data-rd]').forEach(b=>b.onclick=()=>{const n=S.notes.find(x=>x.id==b.dataset.rd);
+open(NT[n.k],`<h2>${NT[n.k]}</h2><div class="instr">Прочти с благоговением, затем перекрестись</div><div class="txt">${paras(NTX[n.k](n.n))}</div><div class="orn">✠</div><button class="btn" id="amen">Аминь · Помолился</button>`);
+$('#amen').onclick=()=>{mark();$('#amen').textContent='Господи, помилуй и спаси';$('#amen').disabled=true}})}
+function games(){$('#main').innerHTML=`<div class="card"><h2>Игры</h2><p class="note" style="text-align:center">Для отдыха души — и немножко для смеха</p></div>
+<div class="card"><h2>Дробовик праведника</h2><p>Бородатый странник в белых одеждах палит из дробовика по летающим кружкам с пивом. 40 секунд, два патрона, затем перезарядка.</p><p class="note">Рекорд: ${S.best||0}</p><button class="btn" id="g1">Играть</button></div>
+<div class="card"><h2>Путь из подъезда</h2><p>Пять этажей, на каждом пьяные соседи. Отбивайся молитвами — продолжай их без ошибок — и добирайся до церкви.</p><button class="btn" id="g2">Играть</button></div>`;
+$('#g1').onclick=game1;$('#g2').onclick=game2}
+function game1(){
+$('#main').innerHTML=`<div class="card" style="padding:10px"><div class="note" style="display:flex;justify-content:space-between"><span id="gs">Счёт: 0</span><span id="gt">40</span><span id="gm">● ●</span></div><canvas id="cv" width="720" height="880" style="width:100%;touch-action:none;border-radius:6px;display:block"></canvas><div id="ge"></div><button class="btn alt" id="gb">← К играм</button></div>`;
+$('#gb').onclick=games;
+const cv=$('#cv'),x=cv.getContext('2d'),W=360,H=440,px=180,py=392;x.scale(2,2);
+const bg=document.createElement('canvas');bg.width=720;bg.height=880;const b=bg.getContext('2d');b.scale(2,2);
+let g=b.createLinearGradient(0,0,0,H);g.addColorStop(0,'#14050a');g.addColorStop(.7,'#4a1216');g.addColorStop(1,'#2a1a0e');b.fillStyle=g;b.fillRect(0,0,W,H);
+const arch=(c)=>{b.beginPath();b.moveTo(c-34,260);b.lineTo(c-34,110);b.quadraticCurveTo(c-34,52,c,28);b.quadraticCurveTo(c+34,52,c+34,110);b.lineTo(c+34,260);b.closePath()};
+[[60,'#c2392b','#f0b040'],[180,'#2f6fb5','#8fe0f0'],[300,'#2e8b57','#eee060']].forEach(([c,c1,c2])=>{
+b.save();arch(c);const gg=b.createLinearGradient(0,28,0,260);gg.addColorStop(0,c2);gg.addColorStop(1,c1);b.globalAlpha=.6;b.fillStyle=gg;b.fill();b.globalAlpha=1;b.clip();
+b.strokeStyle='rgba(20,5,5,.75)';b.lineWidth=3;for(let i=-30;i<=30;i+=15){b.beginPath();b.moveTo(c+i,20);b.lineTo(c+i,260);b.stroke()}for(let y=70;y<260;y+=40){b.beginPath();b.moveTo(c-40,y);b.lineTo(c+40,y);b.stroke()}b.restore();
+b.strokeStyle='#c9a24b';b.lineWidth=3.5;arch(c);b.stroke();
+const rg=b.createLinearGradient(c,200,c+(c<180?60:c>180?-60:0),H);rg.addColorStop(0,'rgba(255,215,120,.22)');rg.addColorStop(1,'rgba(255,215,120,0)');b.fillStyle=rg;b.beginPath();b.moveTo(c-30,240);b.lineTo(c+30,240);b.lineTo(c+90,H);b.lineTo(c-90,H);b.fill()});
+g=b.createLinearGradient(0,408,0,H);g.addColorStop(0,'#6b4524');g.addColorStop(1,'#2e1a0c');b.fillStyle=g;b.fillRect(0,408,W,32);b.strokeStyle='rgba(0,0,0,.35)';for(let i=0;i<W;i+=40){b.beginPath();b.moveTo(i,408);b.lineTo(i-12,H);b.stroke()}b.fillStyle='#c9a24b';b.fillRect(0,406,W,3);
+let mugs=[],pt=[],fx=[],score=0,t0=performance.now(),last=t0,spawn=0,shells=2,reload=0,aim=-1.4,flash=0,shk=0,over=false;
+const pos=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height]};
+cv.addEventListener('pointermove',e=>{const[mx,my]=pos(e);aim=Math.atan2(my-(py-4),mx-px)});
+cv.addEventListener('pointerdown',e=>{if(over)return;if(shells<=0){SND.click();return}SND.shot();const[mx,my]=pos(e);aim=Math.atan2(my-(py-4),mx-px);shells--;flash=7;shk=5;if(!shells){reload=1000;setTimeout(SND.reload,350)}let k=0;
+const tx=px+Math.cos(aim)*72,ty=py-4+Math.sin(aim)*72;
+for(let i=0;i<9;i++)pt.push({k:'t',x:tx,y:ty,x1:mx+(Math.random()-.5)*70,y1:my+(Math.random()-.5)*70,l:7,m:7});
+for(let i=0;i<4;i++)pt.push({k:'k',x:tx,y:ty,vx:Math.cos(aim)*(1+Math.random()*2),vy:Math.sin(aim)*1.5-.2,s:5,l:26,m:26});
+mugs=mugs.filter(m=>{if(Math.hypot(m.x-mx,m.y-my)<46){k++;boom(m);return false}return true});
+if(k){setTimeout(()=>{SND.glass();if(k>1)SND.ding()},70);score+=k*k;fx.push({x:mx,y:my,t:k>1?'Аминь ×'+k+'!':'Аминь!',l:45})}});
+function boom(m){for(let i=0;i<14;i++)pt.push({k:'d',x:m.x,y:m.y,vx:(Math.random()-.5)*8,vy:-Math.random()*6,s:1.5+Math.random()*2.5,l:36,m:36,g:.28});
+for(let i=0;i<7;i++)pt.push({k:'f',x:m.x,y:m.y,vx:(Math.random()-.5)*4,vy:-Math.random()*3,s:3+Math.random()*3,l:30,m:30,g:.05});
+for(let i=0;i<9;i++)pt.push({k:'s',x:m.x,y:m.y,vx:(Math.random()-.5)*9,vy:-Math.random()*7,s:3+Math.random()*4,r:Math.random()*6,w:(Math.random()-.5)*.5,l:40,m:40,g:.3})}
+function mug(m){x.save();x.translate(m.x,m.y);x.rotate(m.a);const gl=x.createLinearGradient(-13,0,13,0);gl.addColorStop(0,'#c9780c');gl.addColorStop(.45,'#ffd25c');gl.addColorStop(1,'#b86a08');
+x.strokeStyle='#e9b24a';x.lineWidth=3.2;x.beginPath();x.arc(14,0,8,-1.4,1.4);x.stroke();
+x.beginPath();x.moveTo(-13,-14);x.lineTo(13,-14);x.lineTo(11,15);x.quadraticCurveTo(0,19,-11,15);x.closePath();x.fillStyle=gl;x.fill();x.strokeStyle='rgba(255,255,255,.8)';x.lineWidth=1.8;x.stroke();
+x.fillStyle='rgba(255,255,255,.5)';x.fillRect(-9,-9,3,22);x.fillStyle='rgba(255,255,255,.7)';[[-3,0],[3,7],[6,-5],[-1,9]].forEach(([a,c])=>{x.beginPath();x.arc(a,c,.9,0,7);x.fill()});
+x.fillStyle='#fffaf0';[[-9,-16,6],[-2,-20,7],[6,-17,6.5],[11,-14,4]].forEach(([a,c,r])=>{x.beginPath();x.arc(a,c,r,0,7);x.fill()});x.restore()}
+function man(t){const bob=Math.sin(t/420)*1.5,rc=flash>0?flash*.5:0;x.save();x.translate(-Math.cos(aim)*rc,bob);
+const hg=x.createRadialGradient(px,py-60,2,px,py-60,46);hg.addColorStop(0,'rgba(255,225,120,.6)');hg.addColorStop(1,'rgba(255,225,120,0)');x.fillStyle=hg;x.fillRect(px-50,py-110,100,100);
+x.fillStyle='#4a2c14';x.beginPath();x.moveTo(px-18,py-60);x.quadraticCurveTo(px-34,py-30,px-24,py-2);x.lineTo(px+24,py-2);x.quadraticCurveTo(px+34,py-30,px+18,py-60);x.quadraticCurveTo(px,py-76,px-18,py-60);x.fill();
+const rg=x.createLinearGradient(px-38,0,px+38,0);rg.addColorStop(0,'#bdb39b');rg.addColorStop(.5,'#fffaf0');rg.addColorStop(1,'#bdb39b');x.fillStyle=rg;x.beginPath();x.moveTo(px-15,py-16);x.quadraticCurveTo(px,py-23,px+15,py-16);x.lineTo(px+40,H);x.lineTo(px-40,H);x.closePath();x.fill();
+x.strokeStyle='rgba(110,90,60,.35)';x.lineWidth=1.2;[-18,-6,8,20].forEach(d=>{x.beginPath();x.moveTo(px+d*.4,py+4);x.quadraticCurveTo(px+d*1.2,py+30,px+d*1.6,H);x.stroke()});
+x.fillStyle='#9c1f1f';x.beginPath();x.moveTo(px-16,py-14);x.lineTo(px-5,py-14);x.lineTo(px+16,py+30);x.lineTo(px+5,py+30);x.fill();x.fillStyle='#d9b05a';x.fillRect(px-17,py-14,3,2);
+const fg=x.createLinearGradient(px-12,0,px+12,0);fg.addColorStop(0,'#d9a77c');fg.addColorStop(1,'#f0c9a0');x.fillStyle=fg;x.beginPath();x.ellipse(px,py-34,12,15,0,0,7);x.fill();
+x.fillStyle='#5a3a1e';x.beginPath();x.moveTo(px-13,py-38);x.quadraticCurveTo(px-12,py-54,px,py-54);x.quadraticCurveTo(px+12,py-54,px+13,py-38);x.quadraticCurveTo(px+8,py-46,px,py-45);x.quadraticCurveTo(px-8,py-46,px-13,py-38);x.fill();
+x.beginPath();x.moveTo(px-12,py-30);x.quadraticCurveTo(px-13,py-8,px,py-4);x.quadraticCurveTo(px+13,py-8,px+12,py-30);x.quadraticCurveTo(px+6,py-20,px,py-21);x.quadraticCurveTo(px-6,py-20,px-12,py-30);x.fill();
+x.fillStyle='#2e1a14';x.beginPath();x.arc(px-5,py-36,1.6,0,7);x.arc(px+5,py-36,1.6,0,7);x.fill();x.fillRect(px-8,py-41,6,1.3);x.fillRect(px+2,py-41,6,1.3);
+x.strokeStyle='#f0c75e';x.lineWidth=3;x.shadowColor='#ffd96a';x.shadowBlur=12;x.beginPath();x.ellipse(px,py-62,23,6,0,0,7);x.stroke();x.shadowBlur=0;
+x.save();x.translate(px,py-4);x.rotate(aim);if(Math.abs(aim)>1.57)x.scale(1,-1);
+const wd=x.createLinearGradient(0,-6,0,6);wd.addColorStop(0,'#8a5a2a');wd.addColorStop(1,'#4a2c14');x.fillStyle=wd;x.beginPath();x.moveTo(-10,-4);x.lineTo(18,-5);x.lineTo(18,5);x.lineTo(-10,9);x.closePath();x.fill();
+const mt=x.createLinearGradient(0,-6,0,6);mt.addColorStop(0,'#9aa0a6');mt.addColorStop(.5,'#3a3d42');mt.addColorStop(1,'#1a1b1d');x.fillStyle=mt;x.fillRect(18,-7,50,6);x.fillRect(18,0,50,6);x.fillStyle='#d9b05a';x.fillRect(66,-7,3,13);
+x.fillStyle='#e8b98a';x.beginPath();x.arc(8,2,5,0,7);x.arc(34,3,4.5,0,7);x.fill();
+if(flash>0){const fl=x.createRadialGradient(76,0,1,76,0,26);fl.addColorStop(0,'#fff6c0');fl.addColorStop(.4,'rgba(255,190,60,.9)');fl.addColorStop(1,'rgba(255,120,0,0)');x.fillStyle=fl;x.beginPath();x.arc(76,0,26,0,7);x.fill()}x.restore();x.restore()}
+function end(){over=true;SND.bell(392);if(score>(S.best||0)){S.best=score;save()}$('#ge').innerHTML=`<h2>Время вышло!</h2><p style="text-align:center">Счёт: ${score}. Рекорд: ${S.best}</p><button class="btn" id="ag">Ещё раз</button>`;$('#ag').onclick=game1;mark()}
+function frame(now){if(!document.body.contains(cv))return;const dt=Math.min(40,now-last),f=dt/16.7;last=now;const left=40-(now-t0)/1000;
+if(left<=0&&!over)end();
+if(!over){spawn-=dt;if(spawn<=0){spawn=Math.max(380,950-(now-t0)/55);const L=Math.random()<.5;mugs.push({x:L?20:340,y:430,vx:(L?1:-1)*(1.3+Math.random()*2.6),vy:-(10+Math.random()*2.5),a:0,w:(Math.random()-.5)*.2})}
+if(reload>0){reload-=dt;if(reload<=0)shells=2}}
+mugs.forEach(m=>{m.x+=m.vx*f;m.y+=m.vy*f;m.vy+=.2*f;m.a+=m.w*f});mugs=mugs.filter(m=>m.y<460);
+pt.forEach(q=>{if(q.vx!==undefined){q.x+=q.vx*f;q.y+=q.vy*f;q.vy+=(q.g||0)*f;if(q.w)q.r+=q.w*f}q.l-=f});pt=pt.filter(q=>q.l>0);fx.forEach(q=>{q.y-=f;q.l-=f});fx=fx.filter(q=>q.l>0);flash-=f;shk=Math.max(0,shk-f*.5);
+x.save();x.translate((Math.random()-.5)*shk,(Math.random()-.5)*shk);x.drawImage(bg,0,0,W,H);mugs.forEach(mug);man(now);
+pt.forEach(q=>{const a=Math.max(0,Math.min(1,q.l/q.m));x.globalAlpha=a;
+if(q.k==='d'){x.fillStyle='#f2b22c';x.beginPath();x.arc(q.x,q.y,q.s,0,7);x.fill()}
+else if(q.k==='f'){x.fillStyle='#fffaf0';x.beginPath();x.arc(q.x,q.y,q.s*(2-a),0,7);x.fill()}
+else if(q.k==='s'){x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle='rgba(200,235,255,.9)';x.beginPath();x.moveTo(0,-q.s);x.lineTo(q.s*.6,q.s);x.lineTo(-q.s*.6,q.s*.5);x.fill();x.restore()}
+else if(q.k==='k'){x.fillStyle='rgba(225,225,225,.55)';x.beginPath();x.arc(q.x,q.y,q.s*(2.2-a*1.4),0,7);x.fill()}
+else if(q.k==='t'){x.strokeStyle='#ffe28a';x.lineWidth=1.5;x.beginPath();x.moveTo(q.x,q.y);x.lineTo(q.x1,q.y1);x.stroke()}
+x.globalAlpha=1});
+x.font='bold 24px Georgia';x.textAlign='center';x.lineWidth=5;x.strokeStyle='#3a0d12';fx.forEach(q=>{x.globalAlpha=Math.min(1,q.l/20);x.strokeText(q.t,q.x,q.y);x.fillStyle='#f0c75e';x.fillText(q.t,q.x,q.y);x.globalAlpha=1});x.restore();
+$('#gs').textContent='Счёт: '+score;$('#gt').textContent=Math.max(0,Math.ceil(left));$('#gm').textContent=reload>0?'перезарядка…':'● '.repeat(shells)+'○ '.repeat(2-shells);
+requestAnimationFrame(frame)}
+requestAnimationFrame(frame)}
+const HERO=`<g><ellipse cx="40" cy="20" rx="20" ry="5" fill="none" stroke="#f0c75e" stroke-width="2.5" filter="url(#gl)"/><path d="M22 30Q18 70 24 94H56Q62 70 58 30Q40 8 22 30Z" fill="#5a3a1e"/><path d="M29 60L14 120H66L51 60Q40 68 29 60Z" fill="url(#rb)"/><path d="M30 64L24 120M50 64L56 120" stroke="#b9ad92" fill="none"/><path d="M33 64L37 120H44L47 64Z" fill="#9c1f1f"/><ellipse cx="40" cy="38" rx="11" ry="14" fill="#e8b98a"/><path d="M29 36Q31 22 40 22Q49 22 51 36Q46 28 40 28Q34 28 29 36Z" fill="#5a3a1e"/><path d="M29 42Q30 62 40 66Q50 62 51 42Q46 52 40 52Q34 52 29 42Z" fill="#5a3a1e"/><circle cx="35.5" cy="37" r="1.3" fill="#2e1a14"/><circle cx="44.5" cy="37" r="1.3" fill="#2e1a14"/><path d="M33 33L38 32M42 32L47 33" stroke="#3a2210"/><path d="M36 47Q40 49 44 47" stroke="#3a2210" fill="none"/><path d="M33 74Q40 62 47 74L45 86H35Z" fill="#e8b98a"/><path d="M40 66V86" stroke="#b98a5a"/></g>`;
+const drunk=i=>{const[c,h]=[['#5b7a9a','#2d2d2d'],['#9a5b5b','#6b5a3a'],['#6a8a5b','#1e1e1e'],['#8a7a3b','#7a4a2a']][i%4];return `<g><path d="M26 118V92H38V118ZM42 118V92H54V118Z" fill="#3b3f4a"/><path d="M20 66Q40 54 60 66L62 100H18Z" fill="${c}"/><path d="M22 70L12 96M58 70L66 82" stroke="${c}" stroke-width="8" stroke-linecap="round"/><circle cx="40" cy="42" r="14" fill="#d9a77c"/><path d="M25 38Q40 18 55 38Q49 30 40 30Q31 30 25 38Z" fill="${h}"/><circle cx="35" cy="41" r="3" fill="#fff"/><circle cx="46" cy="40" r="3" fill="#fff"/><circle cx="36" cy="41.5" r="1.1" fill="#222"/><circle cx="45" cy="41.5" r="1.1" fill="#222"/><circle cx="41" cy="48" r="4" fill="#d9534f"/><path d="M34 54Q40 58 47 54" stroke="#4a2a2a" fill="none" stroke-width="1.5"/><g transform="translate(62 70) rotate(20)"><rect width="7" height="22" rx="2" fill="#2f7a3a"/><rect x="2" y="-7" width="3" height="8" fill="#2f7a3a"/></g></g>`};
+const CHURCH=()=>`<div class="sc"><div class="bub">Вдали золотятся купола…</div><svg viewBox="0 0 360 200"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#27325f"/><stop offset=".75" stop-color="#f0a870"/></linearGradient><linearGradient id="gd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b8892b"/><stop offset=".5" stop-color="#ffe07a"/><stop offset="1" stop-color="#b8892b"/></linearGradient><linearGradient id="rb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bdb39b"/><stop offset=".5" stop-color="#fffaf0"/><stop offset="1" stop-color="#bdb39b"/></linearGradient><filter id="gl"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="360" height="200" fill="url(#sk)"/><g fill="#fff"><circle cx="40" cy="30" r="1.5"/><circle cx="90" cy="14" r="1"/><circle cx="310" cy="26" r="1.5"/><circle cx="270" cy="50" r="1"/></g><rect y="168" width="360" height="32" fill="#2a3a28"/><path d="M0 200L120 168H250L360 200Z" fill="#8a7a66"/><rect x="140" y="108" width="100" height="62" fill="#f3ead2"/><rect x="167" y="76" width="26" height="34" fill="#f3ead2"/><path d="M165 78Q180 38 195 78Z" fill="url(#gd)"/><path d="M180 40V20M174 27H186" stroke="#e0b440" stroke-width="2.5"/><rect x="124" y="124" width="22" height="46" fill="#efe4c4"/><path d="M122 126Q135 98 148 126Z" fill="url(#gd)"/><rect x="234" y="124" width="22" height="46" fill="#efe4c4"/><path d="M232 126Q245 98 258 126Z" fill="url(#gd)"/><path d="M170 170V142Q180 128 190 142V170Z" fill="#6a4328"/><path d="M152 150V132Q158 124 164 132V150ZM196 150V132Q202 124 208 132V150Z" fill="#27325f"/><g transform="translate(40 90) scale(.75)">${HERO}</g></svg></div>`;
+const DR=[['Отче наш',['Отче наш, Иже еси на небесех!','Да святится имя Твое,','да приидет Царствие Твое,','да будет воля Твоя, яко на небеси и на земли.','Хлеб наш насущный даждь нам днесь;','и остави нам долги наша, якоже и мы оставляем должником нашым;','и не введи нас во искушение, но избави нас от лукаваго.']],
+['Царю Небесный',['Царю Небесный, Утешителю, Душе истины,','Иже везде сый и вся исполняяй,','Сокровище благих и жизни Подателю,','прииди и вселися в ны,','и очисти ны от всякия скверны,','и спаси, Блаже, души наша.']],
+['Богородице Дево',['Богородице Дево, радуйся,','Благодатная Марие, Господь с Тобою;','благословена Ты в женах,','и благословен плод чрева Твоего,','яко Спаса родила еси душ наших.']]];
+const TAUNT=['Эй, братан, дай на опохмел!','Куда пошёл? Посиди с нами!','Налей-ка, святоша!','А ты чё это бормочешь?!'];
+function game2(){let floor=5,faith=3,pr,step,prog,tmo,n=0,ring=false;const ALL=DR.flatMap(d=>d[1]);const alive=()=>document.getElementById('g2s');
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]);
+function head(){return `<div class="note" style="display:flex;justify-content:space-between"><span>Этаж: ${floor}</span><span>Вера: ${'✝ '.repeat(faith)}</span></div>`}
+function scene(bub,prog,ring){const dx=130+prog*48;return `<div class="sc" id="g2s"><div class="bub">${bub}</div><svg viewBox="0 0 360 200"><defs><linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#52473b"/><stop offset="1" stop-color="#2a2420"/></linearGradient><linearGradient id="rb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bdb39b"/><stop offset=".5" stop-color="#fffaf0"/><stop offset="1" stop-color="#bdb39b"/></linearGradient><radialGradient id="lg"><stop offset="0" stop-color="#ffe9a0" stop-opacity=".85"/><stop offset="1" stop-color="#ffe9a0" stop-opacity="0"/></radialGradient><radialGradient id="vg"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".65"/></radialGradient><filter id="gl"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="360" height="200" fill="url(#wl)"/><rect y="108" width="360" height="70" fill="#35564f"/><rect y="106" width="360" height="4" fill="#d8cfb4" opacity=".55"/><g fill="#000" opacity=".12"><ellipse cx="90" cy="60" rx="26" ry="14"/><ellipse cx="300" cy="40" rx="22" ry="10"/><ellipse cx="250" cy="130" rx="30" ry="12"/></g>
+<rect x="150" y="24" width="46" height="58" fill="#16264d" stroke="#6b5a45" stroke-width="4"/><path d="M173 24V82M150 53H196" stroke="#6b5a45" stroke-width="3"/><circle cx="185" cy="40" r="5" fill="#f1ecd0"/>
+<path d="M240 190V150H270V130H300V110H330V90H360V190Z" fill="#2a2623"/><path d="M240 148L360 86" stroke="#15120f" stroke-width="3"/><path d="M252 142V176M276 130V176M300 118V176M324 106V176M348 94V176" stroke="#15120f" stroke-width="2"/>
+<rect y="172" width="360" height="28" fill="#6b5b4a"/><path d="M0 172H360" stroke="#8a7a66" stroke-width="2"/><path d="M0 186H360M60 172L40 200M150 172L140 200M240 172L240 200M330 172L340 200" stroke="#4d4033"/>
+<rect x="6" y="66" width="36" height="106" fill="#6a4328" stroke="#3a2210" stroke-width="3"/><circle cx="34" cy="122" r="2.5" fill="#d9b05a"/><rect x="14" y="74" width="20" height="14" fill="#d8cfb4"/><text x="24" y="85" font-size="11" text-anchor="middle" fill="#2e1a14" font-family="Georgia">${floor}</text>
+<line x1="110" y1="0" x2="110" y2="18" stroke="#111"/><circle cx="110" cy="24" r="6" fill="#ffe9a0"/><circle class="lamp" cx="110" cy="24" r="70" fill="url(#lg)"/>
+<g transform="translate(52 70)">${HERO}</g>${ring?'<circle class="ring" cx="92" cy="120" r="30" fill="none" stroke="#f0c75e" stroke-width="4"/>':''}
+<g style="transform:translate(${dx}px,72px);transition:transform .6s"><g class="sway">${drunk(n)}</g></g><rect width="360" height="200" fill="url(#vg)"/></svg></div>`}
+function fight(){ring=false;pr=DR[Math.floor(Math.random()*3)];step=1;prog=0;ask()}
+function ask(){clearTimeout(tmo);const rg0=ring;const ok=pr[1][step],o=shuf([ok,...shuf(ALL.filter(l=>l!==ok)).slice(0,2)]);
+$('#main').innerHTML=`<div class="card">${head()}${scene(TAUNT[n%4],prog,ring)}<div class="bar" style="margin:10px 0"><i style="animation:fill 9s linear forwards"></i></div>
+<p style="text-align:center;margin:4px 0"><b>${pr[0]}</b><br><i>«${pr[1][step-1]}»</i></p><p class="note" style="text-align:center;margin:2px 0 8px">Что дальше? Выбери верные слова молитвы:</p>
+${o.map(t=>`<button class="item" data-a="${esc(t)}"><span>${esc(t)}</span></button>`).join('')}</div>`;
+ring=false;const pick=t=>{clearTimeout(tmo);if(t===ok){SND.good();SND.step();prog++;step++;ring=true;if(prog>=3)won();else ask()}else{SND.bad();faith--;if(faith<=0)lost();else{ $('#g2s').classList.add('shake');setTimeout(()=>{if(alive())ask()},450);document.querySelectorAll('[data-a]').forEach(b=>b.disabled=true)}}};
+document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>pick(b.dataset.a));tmo=setTimeout(()=>{if(alive())pick('')},9000)}
+function won(){floor--;n++;SND.win();if(floor<=1){playSong();$('#main').innerHTML=`<div class="card"><h2>Ты на свободе!</h2>${CHURCH()}<p style="text-align:center">Последний пьяный, бормоча, отступил. Ты вышел из подъезда и направился в храм — искупать грехи молитвой и свечой.</p><p class="note" id="sn" style="text-align:center">🎵 Играет «Полный бак»</p><button class="btn alt" id="sg">⏸ Остановить песню</button><button class="btn" id="c1">🕯 Войти в храм и поставить свечу</button><button class="btn alt" id="c2">Прочесть покаянный псалом 50</button><button class="btn alt" id="c3">← К играм</button></div>`;mark();S.cand+=0;save();
+$('#sg').onclick=()=>{if(song&&!song.paused){stopSong();$('#sg').textContent='▶ Включить песню'}else{playSong();$('#sg').textContent='⏸ Остановить песню'}};$('#c1').onclick=()=>{tab='temple';tm='r';render()};$('#c2').onclick=()=>{stopSong();prayer('ps50')};$('#c3').onclick=()=>{stopSong();games()}}
+else{$('#main').innerHTML=`<div class="card">${head()}${scene('…бормочет и отступает',3)}<p style="text-align:center">Сосед, бормоча, отступил. Спускайся ниже — на этаж ${floor}.</p><button class="btn" id="nx2">Спускаться ниже</button></div>`;$('#nx2').onclick=fight}}
+function lost(){SND.lose();$('#main').innerHTML=`<div class="card"><h2>Вера пошатнулась</h2><p style="text-align:center">Соседи затащили тебя на лавочку. Не унывай: помолись и попробуй снова!</p><button class="btn" id="rt">Ещё раз</button><button class="btn alt" id="c3">← К играм</button></div>`;$('#rt').onclick=game2;$('#c3').onclick=games}
+fight()}
+function bell(){const supp='Notification' in window;
+$('#main').innerHTML=`<div class="card"><h2>Часы молитвы</h2><p class="note" style="text-align:center">Напомним о молитве в назначенный час</p>
+<div id="rl">${S.rem.map(r=>`<div class="rem"><input type="checkbox" class="sw" data-i="${r.id}" ${r.on?'checked':''}><div>${r.l}</div><input type="time" value="${r.t}" data-t="${r.id}"><button class="x" data-d="${r.id}">×</button></div>`).join('')}</div>
+<div class="orn">✠</div><div class="row"><input id="nl" placeholder="Название" style="flex:2;font:inherit;padding:8px;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:5px"><input id="nt" type="time" value="12:00" style="flex:1;font:inherit;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:5px"></div>
+<button class="btn alt" id="add">+ Добавить напоминание</button>
+<button class="btn" id="test">Проверить напоминание</button>${tg&&tg.initData?'<button class="btn" id="tgs">Сохранить в Telegram-боте</button>':''}</div>
+<div class="card"><p class="note">Напоминания приходят, пока приложение открыто${supp?'. Разрешите уведомления для лучшего результата':''}. Нажмите «Сохранить в Telegram-боте» — бот будет присылать напоминания в чат в указанные часы, даже когда приложение закрыто.</p>${supp?'<button class="btn alt" id="perm">Разрешить уведомления</button>':''}</div>`;
+document.querySelectorAll('[data-i]').forEach(e=>e.onchange=()=>{S.rem.find(r=>r.id==e.dataset.i).on=e.checked;save()});
+document.querySelectorAll('[data-t]').forEach(e=>e.onchange=()=>{S.rem.find(r=>r.id==e.dataset.t).t=e.value;save()});
+document.querySelectorAll('[data-d]').forEach(e=>e.onclick=()=>{S.rem=S.rem.filter(r=>r.id!=e.dataset.d);save();bell()});
+$('#add').onclick=()=>{const l=$('#nl').value.trim()||'Час молитвы';S.rem.push({id:Date.now(),l,t:$('#nt').value||'12:00',on:true,r:null});save();bell()};
+$('#test').onclick=()=>alarm({l:'Вечернее правило',r:'eve'});
+if($('#tgs'))$('#tgs').onclick=()=>tg.sendData(JSON.stringify({rem:S.rem.map(r=>({l:r.l,t:r.t,on:r.on,r:r.r}))}));
+if(supp&&$('#perm'))$('#perm').onclick=()=>{try{Notification.requestPermission()}catch(e){}}}
+function alarm(r){pending=r;$('#mm').textContent=`«${r.l}». Оставь суету, предстань пред Господом.`;
+$('#mgo').style.display=r.r?'block':'none';$('#modal').classList.add('show');
+try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}
+try{if('Notification' in window&&Notification.permission==='granted')new Notification('Час молитвы',{body:r.l})}catch(e){}}
+$('#mx').onclick=()=>$('#modal').classList.remove('show');
+$('#mgo').onclick=()=>{$('#modal').classList.remove('show');const k=pending.r;if(RULES[k])rule(k);else prayer(k)};
+setInterval(()=>{const d=new Date(),hm=d.toTimeString().slice(0,5),key=today();
+S.rem.forEach(r=>{if(r.on&&r.t===hm&&S.fired[r.id]!==key+hm){S.fired[r.id]=key+hm;save();alarm(r)}})},15000);
+const sndUI=()=>{$('#snd').textContent=S.snd===false?'🔇':'🔊'};sndUI();$('#snd').onclick=()=>{S.snd=S.snd===false;save();sndUI();if(S.snd===false)stopSong();else SND.ding()};
+render();
+(function(){const q=new URLSearchParams(location.search).get('r');if(q&&RULES[q])rule(q);else if(q&&byId[q])prayer(q)})();
+</script>
+</body>
+</html>
